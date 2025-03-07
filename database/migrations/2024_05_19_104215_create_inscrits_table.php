@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('genre');
             $table->string('email');
             $table->string('nationalite');
+            $table->string('lieu_touristique')->default('RAS');
             $table->string('pays_residence');
             $table->string('inscription_tant_que');
             $table->string('langue_com');
