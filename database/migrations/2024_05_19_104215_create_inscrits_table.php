@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('numero_tel');
             $table->string('etat');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
