@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'log'),
+    'default' => 'smtp',
 
     /*
     |--------------------------------------------------------------------------
@@ -52,11 +52,11 @@ return [
         'smtp' => [
             'transport' => 'smtp',
             'url' => env('MAIL_URL'),
-            'host' => env('MAIL_HOST', 'smtp.gmail.com'),
-            'port' => env('MAIL_PORT', 587),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME', 'invitation.oide@gmail.com'),
-            'password' => env('MAIL_PASSWORD', 'swmpgovlgsfdxeed'),
+            'host' => 'smtp.gmail.com',
+            'port' => 587,
+            'encryption' => 'tls',
+            'username' => 'invitation.oide@gmail.com',
+            'password' => 'swmpgovlgsfdxeed',
             'timeout' => null,
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
         ],
@@ -121,8 +121,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'invitation.oide@gmail.com'),
-        'name' => env('MAIL_FROM_NAME', 'OIDE-IOED'),
+        'address' => 'invitation.oide@gmail.com',
+        'name' => 'OIDE-IOED',
     ],
 
 ];
