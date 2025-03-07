@@ -1,0 +1,90 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+    font-family: 'Arial', sans-serif;
+}
+
+.business-card {
+    width: 350px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.business-card:hover {
+    transform: scale(1.05);
+}
+
+.card-header {
+    background-color: #f8f8f8;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.logo {
+    max-width: 300px;
+}
+
+.card-body {
+    padding: 20px;
+    text-align: center;
+}
+
+.name {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+}
+
+.title {
+    font-size: 18px;
+    color: #666;
+    margin: 5px 0;
+}
+
+.card-footer {
+    background-color: #1e73be;
+    padding: 15px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.contact-info p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.contact-info i {
+    margin-right: 8px;
+    color: #007BFF;
+}
+
+.access-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.access-button i {
+    margin-right: 8px;
+}
+
+.access-button:hover {
+    background-color: #218838;
+}

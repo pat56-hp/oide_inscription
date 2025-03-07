@@ -1,0 +1,279 @@
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url("./waiting.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Ensures the background image is fixed and doesn't scroll with content */
+  background-position: center;
+  color: white;
+  font-family: sans-serif;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 100%;
+  max-height: 100%;
+  box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+}
+
+
+
+
+#gif{
+  max-width: 5%;
+}
+
+#title {
+  font-size: 4vw; /* Relative unit for responsive font size */
+  font-family: "Pacifico", cursive;
+  text-align: center;
+}
+
+#minuteur {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Flexible grid */
+  gap: 15px;
+  margin: 3vh auto;
+  width: 100%;
+}
+
+.box {
+  text-align: center;
+  background-color: #1e73be;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.box > div:first-child {
+  font-size: 5vw; /* Relative unit for responsive font size */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.unite {
+  padding: 5px 10px;
+  background-color: #09345b;
+  font-size: 2vw; /* Relative unit for responsive font size */
+}
+
+h1 {
+  color: #1e73be;
+}
+
+#logo {
+  max-width: 20vw; /* Relative unit for responsive width */
+  margin-bottom: 20px;
+  align-self: flex-start;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 2vw; /* Relative unit for responsive font size */
+  color: white;
+  background-color: #1e73be;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.sponsors {
+  padding: 15px 30px;
+  font-size: 18px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 2vw; /* Relative unit for responsive font size */
+  color: white;
+  text-align: center;
+}
+
+.logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  width: 100%;
+}
+
+.logos img {
+  max-width: 10vw; /* Relative unit for responsive width */
+  max-height: 10vw; /* Relative unit for responsive height */
+  margin: 0 10px;
+  animation: scroll 10s linear infinite;
+}
+
+
+.carousel-container {
+    overflow: hidden;
+    width: 100%;
+    border-radius: 10px;
+    position: relative;
+    margin: 15px;
+}
+
+
+.carousel-item img {
+    max-width: 100px;
+    height: auto;
+    display: block;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre douce */
+    border-radius: 8px; /* Optionnel : arrondir les coins des images */
+    transition: box-shadow 0.3s ease-in-out; /* Transition douce pour l'effet d'ombre */
+}
+.carousel {
+    overflow: hidden;
+    width: 80%;
+    max-width: 150px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+.carousel-track {
+    display: flex;
+    align-items: center;
+    transition: transform 0.5s linear;
+    will-change: transform;
+}
+
+.carousel-item {
+    max-width: 150px;
+    margin: 0 15px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.carousel-item p {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #ffff;
+}
+
+.carousel-item img:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Ombre plus prononcée au survol */
+}
+
+.carousel-item:hover {
+    transform: scale(1.1);
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.carousel-container:hover .carousel-track {
+    animation-play-state: paused;
+}
+
+
+@media (max-width: 768px) {
+  #title {
+    font-size: 6vw;
+  }
+
+  .box > div:first-child {
+    font-size: 7vw;
+  }
+
+  .unite {
+    font-size: 4vw;
+  }
+
+  button {
+    font-size: 4vw;
+    padding: 8px 16px;
+  }
+
+  .logos img {
+    max-width: 14vw;
+    max-height: 14vw;
+    margin: 0 5px;
+  }
+
+  .carousel-item {
+        margin: 0 5px;
+    }
+
+
+}
+
+@media (max-width: 480px) {
+  #title {
+    font-size: 8vw;
+  }
+
+  h2{
+    font-size: 5vw;
+  }
+
+  .box > div:first-child {
+    font-size: 10vw;
+  }
+
+  .unite {
+    font-size: 6vw;
+  }
+
+  button {
+    font-size: 5vw;
+    padding: 6px 12px;
+  }
+
+  .logos img {
+    max-width: 15vw;
+    max-height: 15vw;
+    margin: 0 3px;
+  }
+
+  .carousel-item img {
+        max-width: 40px;
+}
+
+}

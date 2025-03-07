@@ -1,0 +1,110 @@
+div.wpcf7 {
+	marge: 0;
+	rembourrage: 0;
+}
+
+div.wpcf7 .screen-reader-response {
+	position: absolue;
+	débordement caché;
+	clip: rect (1px, 1px, 1px, 1px);
+	hauteur: 1px;
+	largeur: 1px;
+	marge: 0;
+	rembourrage: 0;
+	bordure: 0;
+}
+
+div.wpcf7-response-output {
+	marge: 2em 0.5em 1em;
+	rembourrage: 0.2em 1em;
+	bordure: solide 2px # ff0000;
+}
+
+div.wpcf7-mail-envoyé-ok {
+	bordure: solide 2px # 398f14;
+}
+
+div.wpcf7-mail-sented-ng,
+div.wpcf7-aborted {
+	bordure: solide 2px # ff0000;
+}
+
+div.wpcf7-spam-bloqué {
+	bordure: solide 2px # ffa500;
+}
+
+div.wpcf7-validation-errors,
+div.wpcf7-acceptation-manquant {
+	bordure: solide 2px # f7e700;
+}
+
+.wpcf7-form-control-wrap {
+	position: relative;
+}
+
+span.wpcf7-not-valid-tip {
+	couleur: # f00;
+	taille de police: 1em;
+	poids de la police: normal;
+	bloc de visualisation;
+}
+
+.use-floating-validation-tip span.wpcf7-not-valid-tip {
+	position: absolue;
+	en haut: 20%;
+	à gauche: 20%;
+	z-index: 100;
+	bordure: 1px solide # ff0000;
+	background: #fff;
+	remplissage: .2em .8em;
+}
+
+span.wpcf7-list-item {
+	affichage: inline-block;
+	marge: 0 0 0 1em;
+}
+
+span.wpcf7-list-item-label :: avant,
+span.wpcf7-list-item-label :: after {
+	contenu: " ";
+}
+
+.wpcf7-display-none {
+	affichage: aucun;
+}
+
+div.wpcf7 .ajax-loader {
+	visibilité: cachée;
+	affichage: inline-block;
+	background-image: url ('../../ images / ajax-loader.gif');
+	largeur: 16px;
+	hauteur: 16px;
+	bordure: aucune;
+	rembourrage: 0;
+	marge: 0 0 0 4 px;
+	alignement vertical: milieu;
+}
+
+div.wpcf7 .ajax-loader.is-active {
+	visibilité: visible;
+}
+
+div.wpcf7 div.ajax-error {
+	affichage: aucun;
+}
+
+div.wpcf7 .placeheld {
+	couleur: # 888;
+}
+
+div.wpcf7 input [type = "fichier"] {
+	curseur: pointeur;
+}
+
+div.wpcf7 input [type = "fichier"]: désactivé {
+	curseur: par défaut;
+}
+
+div.wpcf7 .wpcf7-submit: désactivé {
+	curseur: non autorisé;
+}
