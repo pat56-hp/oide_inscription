@@ -20,4 +20,8 @@ class Inscrit extends Model
     {
         return $this->hasMany(InscritSiteTouristique::class);
     }
+
+    public function conferences(){
+        return $this->belongsToMany(Conference::class, 'inscrit_conference', 'inscrit_id', 'conference_id');
+    }
 }

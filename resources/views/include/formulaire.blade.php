@@ -61,7 +61,6 @@
     /* Style pour la section des lieux touristiques */
           #touristSection {
             background-color: #f8f9fa;
-            padding: 20px;
             border-radius: 10px;
           }
           /* Container for the site details */
@@ -627,7 +626,7 @@
                                                 <div class="form-group">
                                                     <label>Numéro de téléphone</label>
                                                     <div class="input-group">
-                                                        <input id="phone" type="tel" name="numero_tel" class="form-control">
+                                                        <input id="phone" type="tel" name="numero_tel" class="form-control w-100">
                                                         <div class="input-group-append">
                                                             <i class="fa fa-phone btn-contact"></i>
                                                         </div>
@@ -885,40 +884,61 @@
                                   </div>
 
                                   <!-- Section 2: Lieux Touristiques -->
-                                  <div class="form-section" id="section-2" style="display:none;">
-                                      <div class="form-group">
-                                          <label>Voulez-vous visiter un lieu touristique lors de votre séjour ?</label>
-                                          <div class="radio">
-                                              <label>
-                                                  <input type="radio" name="visit_tourist_site" value="oui" onclick="showTouristSection()"> Oui
-                                              </label>
-                                              <label style="margin:10px">
-                                                  <input type="radio" name="visit_tourist_site" value="non" onclick="hideTouristSection()" checked> Non
-                                              </label>
+                                  <div class="form-section " id="section-2" style="display:none;">
+                                    <!-- Conference Block -->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                <label for="conferences">Conférences</label>
+                                                <select name="conferences[]" class="form-control select2" id="conferences" multiple>
+                                                    <option value="0" disabled="true">Sélectionnez des conférences...</option>
+                                                    @foreach ($conferences as $conference)
+                                                        <option value="{{ $conference->id }}">{{ $conference->theme }}</option>
+                                                    @endforeach
+                                                </select>
+                                                </div>
                                           </div>
-                                      </div>
-                                      <div id="touristSection" style="display:none;">
-                                          <div class="form-group">
-                                              <label>Sélectionnez les lieux touristiques que vous souhaitez visiter :</label>
-                                              <select class="form-control" id="tourist_site" name="lieux_touristiques[]" multiple onchange="showSelectedSites()">
-                                                      <option value="0" disabled="true">Sélectionnez le(s) lieu(x) touristique(s)...</option>
-                                                      <option value="Visite du Parc National du Banco" data-img="{{asset('images/Tourisme/Banco.jpg')}}" data-name="Visite du Parc National du Banco" data-desc="Situé en plein cœur d’Abidjan, le Parc National du Banco est une forêt luxuriante urbaine. Le visiteur aura droit à une visite guidée de l’écomusée, du centre piscicole, de l’Arboretum et du Centre de formation des agents forestiers. Activités de loisirs : VTT, randonnée pédestre." data-price="TARIF : 20 000 Fcfa / personne">Visite du Parc National du Banco</option>
-                                                      <option value="Balade Lagunaire" data-img="{{asset('images/Tourisme/lagunaire.jpg')}}" data-name="Balade Lagunaire" data-desc="ABIDJAN est une ville de la Côte d’Ivoire, au bord de la lagune Ébrié. Elle appartient au District Autonome d’Abidjan, capitale économique de la Côte d’Ivoire. Le visiteur aura droit à une balade lagunaire avec vue sur le Plateau, Treichville, Cocody, le port, le village des pêcheurs et le cimetière des bateaux." data-price="TARIF : 80 000 Fcfa / personne">Balade Lagunaire</option>
-                                                      <option value="Grand-Bassam" data-img="{{asset('images/Tourisme/Bassam.jpg')}}" data-name="Grand-Bassam" data-desc="Découverte des vestiges de l’ancienne capitale de la Côte d’Ivoire dans le Quartier France, déclarée Patrimoine Mondial de l’UNESCO en juin 2012. Les visiteurs découvriront le musée du costume, l’histoire de Bassam, une visite aux artisans d’art de Bassam, un déjeuner dans un hôtel-restaurant en bordure de mer et enfin la détente sur la plage pour clôturer la visite." data-price="TARIF : 40.000 Fcfa / personne">Grand-Bassam</option>
-                                                      <option value="Yamoussoukro" data-img="{{asset('images/Tourisme/yamoussoukro.jpg')}}" data-name="Yamoussoukro" data-desc="Yamoussoukro, capitale de la Côte d’Ivoire et territoire du groupe baoulé dénommé les « Akouê », située dans le centre du pays. La visite inclut la découverte de la Fondation Félix Houphouët Boigny, du lac aux crocodiles, des grandes écoles et une visite guidée de la Basilique Notre Dame de la Paix." data-price="TARIF : 70.000F /  personne">Yamoussoukro</option>
-                                                      <option value="Domaine BINI Forêt" data-img="{{asset('images/Tourisme/BINI.png')}}" data-name="Domaine BINI Forêt" data-desc="Domaine Bini, site pittoresque parsemé de verdure et de merveilles à découvrir. L’arrivée se fait au son du tam-tam traditionnel, suivi d’une randonnée pédestre et d’un bain d’argile." data-price="TARIF : 40.000 Fcfa / personne">Domaine BINI Forêt</option>
-                                                      <option value="Long Séjour - Bouaké" data-img="{{asset('images/Tourisme/bouake.jpg')}}" data-name="Long Séjour - Bouaké" data-desc="Visite de Nzi River Lodge, un parc à but animal et végétal localisé au centre de la Côte d’Ivoire. Découverte des potières de Tanoa Sakassou regroupées en GVC et prestation de la danse Goly de Bandèkouassikro." data-price="NB : Le tarif sera défini par l’agence de voyage pour le participant">Long Séjour - Bouaké</option>
-                                                      <option value="Long Séjour - Korhogo" data-img="{{asset('images/Tourisme/KOROGHO.jpg')}}" data-name="Long Séjour - Korhogo" data-desc="Les tisserands et la prestation de la danse boloye de Waraniéné, les peintres sur toile de Fakaha, l’un des lieux d’inspiration du célèbre artiste Picasso. Visite du rocher sacré Chienlô, lieu de formulation et de réalisation de vœux." data-price="NB : Le tarif sera défini par l’agence de voyage pour le participant">Long Séjour - Korhogo</option>
-                                                      <option value="Long Séjour - Man" data-img="{{asset('images/Tourisme/MAN.jpg')}}" data-name="Long Séjour - Man" data-desc="Visite des chutes d’eau ou cascades naturelles de Man, lieu de divertissement pour les touristes épris de la nature et de ses merveilles.Les singes sacrés de Gbeupleu, interdits à la consommation et faisant l’objet d’une célébration culturelle pour les villageois dudit village.La danse Tématé de Dompleu, une danse de réjouissance pratiquée lors de la culture de riz." data-price="NB : Le tarif sera défini par l’agence de voyage pour le participant">Long Séjour - Man</option>
-                                              </select>
+                                          <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Voulez-vous visiter un lieu touristique lors de votre séjour ?</label>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="visit_tourist_site" value="oui" onclick="showTouristSection()"> Oui
+                                                    </label>
+                                                    <label style="margin:10px">
+                                                        <input type="radio" name="visit_tourist_site" value="non" onclick="hideTouristSection()" checked> Non
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div id="touristSection" style="display:none;">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Sélectionnez les lieux touristiques que vous souhaitez visiter :</label>
+                                                            <select class="form-control select2" id="tourist_site" name="lieux_touristiques[]" multiple onchange="showSelectedSites()">
+                                                                    <option value="0" disabled="true">Sélectionnez le(s) lieu(x) touristique(s)...</option>
+                                                                    <option value="Visite du Parc National du Banco" data-img="{{asset('images/Tourisme/Banco.jpg')}}" data-name="Visite du Parc National du Banco" data-desc="Situé en plein cœur d’Abidjan, le Parc National du Banco est une forêt luxuriante urbaine. Le visiteur aura droit à une visite guidée de l’écomusée, du centre piscicole, de l’Arboretum et du Centre de formation des agents forestiers. Activités de loisirs : VTT, randonnée pédestre." data-price="TARIF : 20 000 Fcfa / personne">Visite du Parc National du Banco</option>
+                                                                    <option value="Balade Lagunaire" data-img="{{asset('images/Tourisme/lagunaire.jpg')}}" data-name="Balade Lagunaire" data-desc="ABIDJAN est une ville de la Côte d’Ivoire, au bord de la lagune Ébrié. Elle appartient au District Autonome d’Abidjan, capitale économique de la Côte d’Ivoire. Le visiteur aura droit à une balade lagunaire avec vue sur le Plateau, Treichville, Cocody, le port, le village des pêcheurs et le cimetière des bateaux." data-price="TARIF : 80 000 Fcfa / personne">Balade Lagunaire</option>
+                                                                    <option value="Grand-Bassam" data-img="{{asset('images/Tourisme/Bassam.jpg')}}" data-name="Grand-Bassam" data-desc="Découverte des vestiges de l’ancienne capitale de la Côte d’Ivoire dans le Quartier France, déclarée Patrimoine Mondial de l’UNESCO en juin 2012. Les visiteurs découvriront le musée du costume, l’histoire de Bassam, une visite aux artisans d’art de Bassam, un déjeuner dans un hôtel-restaurant en bordure de mer et enfin la détente sur la plage pour clôturer la visite." data-price="TARIF : 40.000 Fcfa / personne">Grand-Bassam</option>
+                                                                    <option value="Yamoussoukro" data-img="{{asset('images/Tourisme/yamoussoukro.jpg')}}" data-name="Yamoussoukro" data-desc="Yamoussoukro, capitale de la Côte d’Ivoire et territoire du groupe baoulé dénommé les « Akouê », située dans le centre du pays. La visite inclut la découverte de la Fondation Félix Houphouët Boigny, du lac aux crocodiles, des grandes écoles et une visite guidée de la Basilique Notre Dame de la Paix." data-price="TARIF : 70.000F /  personne">Yamoussoukro</option>
+                                                                    <option value="Domaine BINI Forêt" data-img="{{asset('images/Tourisme/BINI.png')}}" data-name="Domaine BINI Forêt" data-desc="Domaine Bini, site pittoresque parsemé de verdure et de merveilles à découvrir. L’arrivée se fait au son du tam-tam traditionnel, suivi d’une randonnée pédestre et d’un bain d’argile." data-price="TARIF : 40.000 Fcfa / personne">Domaine BINI Forêt</option>
+                                                                    <option value="Long Séjour - Bouaké" data-img="{{asset('images/Tourisme/bouake.jpg')}}" data-name="Long Séjour - Bouaké" data-desc="Visite de Nzi River Lodge, un parc à but animal et végétal localisé au centre de la Côte d’Ivoire. Découverte des potières de Tanoa Sakassou regroupées en GVC et prestation de la danse Goly de Bandèkouassikro." data-price="NB : Le tarif sera défini par l’agence de voyage pour le participant">Long Séjour - Bouaké</option>
+                                                                    <option value="Long Séjour - Korhogo" data-img="{{asset('images/Tourisme/KOROGHO.jpg')}}" data-name="Long Séjour - Korhogo" data-desc="Les tisserands et la prestation de la danse boloye de Waraniéné, les peintres sur toile de Fakaha, l’un des lieux d’inspiration du célèbre artiste Picasso. Visite du rocher sacré Chienlô, lieu de formulation et de réalisation de vœux." data-price="NB : Le tarif sera défini par l’agence de voyage pour le participant">Long Séjour - Korhogo</option>
+                                                                    <option value="Long Séjour - Man" data-img="{{asset('images/Tourisme/MAN.jpg')}}" data-name="Long Séjour - Man" data-desc="Visite des chutes d’eau ou cascades naturelles de Man, lieu de divertissement pour les touristes épris de la nature et de ses merveilles.Les singes sacrés de Gbeupleu, interdits à la consommation et faisant l’objet d’une célébration culturelle pour les villageois dudit village.La danse Tématé de Dompleu, une danse de réjouissance pratiquée lors de la culture de riz." data-price="NB : Le tarif sera défini par l’agence de voyage pour le participant">Long Séjour - Man</option>
+                                                            </select>
+                                                        </div>
+                                                    
+                                                    </div>
+                                                </div>
+                                                <div id="siteDetails" style="display:none;">
+                                                    <div id="selectedSites"></div>
+                                                </div>
+                                            </div>
                                           </div>
-                                          <div id="siteDetails" style="display:none;">
-                                              <div id="selectedSites"></div>
-                                          </div>
-                                      </div>
+                                        </div>
                                       <input type="hidden" name="selected_sites_data" id="selected_sites_data">
                                       <button type="button" class="btn btn-secondary" id="prevButton">Précédent</button>
-                                      <button type="submit" class="btn btn-success" id="submitButton1">S'INSCRIRE</button>
+                                      <button type="submit" class="btn btn-success" id="submitButton1">INSCRIRE</button>
                                   </div>
                               </form>
                             </div>
@@ -938,6 +958,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+$(document).ready(function(){
+    $('.select2').select2()
+})
+//$('#touristSection').select2()
 
 function showTouristSection() {
     document.getElementById('touristSection').style.display = 'block';

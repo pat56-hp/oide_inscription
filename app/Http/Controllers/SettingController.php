@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Conference;
 use Illuminate\Http\Request;
 use Redirect;
 use Validator;
@@ -18,14 +19,21 @@ class SettingController extends Controller
 {
 
   public function index(){
-     $inscrits = Inscrit::all();
+     $inscrits = Inscrit::orderByDesc('created_at')->get();
      return view('include.vue',compact('inscrits'));
   }
 
   //-------------------------INSCRIT----------------------------------------------------------------
-      //AJOUTER NOUVEL INSCRIT
+
+  public function ajoutInscritForm(){
+    $data['conferences'] = Conference::all();
+     return view('index', $data);
+  }
+
+  //AJOUTER NOUVEL INSCRIT
 
   public function ajoutInscrit(Request $request){
+    //dd($request->all());
       $validator = \Validator::make($request->all(), [
           'civilite' => 'required',
           'nom' => 'required|string',
@@ -35,6 +43,7 @@ class SettingController extends Controller
           'pays_residence' => 'required',
           'langue_com' => 'required',
           'numero_tel' => 'required|max:20',
+          'conferences' => 'required'
       ], [
           'civilite.required' => 'Entrer votre civilité svp',
           'nom.required' => 'Entrer votre nom svp',
@@ -48,6 +57,7 @@ class SettingController extends Controller
           'email.required' => 'Entrez votre email svp',
           'numero_tel.required' => 'Entrez votre numero de telephone svp',
           'numero_tel.max' => 'Entrez un maximum de 20 caractères',
+          'conferences.required' => 'Veuillez selectionner au moins une conférence svp'
       ]);
 
       if (!$validator->passes()) {
@@ -61,7 +71,7 @@ class SettingController extends Controller
           $inscrit->email = $request->email;
           $inscrit->nationalite = $request->nationalite;
           $inscrit->pays_residence = $request->pays_residence;
-          $inscrit->inscription_tant_que = $request->inscription_tant_que;
+          $inscrit->inscription_tant_que = $request->inscription_tant_que ?? 'Participant';
           $inscrit->langue_com = $request->langue_com;
           $inscrit->numero_tel = $request->numero_tel;
           $inscrit->lieu_touristique = $request->visit_tourist_site === 'oui' ? 'OUI' : 'NON';
@@ -85,13 +95,17 @@ class SettingController extends Controller
                 }
             }
         }
+
+        //Sauvegarde des conferences selectionnées
+        $inscrit->conferences()->attach($request->conferences);
+
         // Réponse JSON en cas de succès
           return response()->json(['status' => 1, 'msg' => 'Votre inscription a été effectuée avec succès.']);
       }
   }
   //GET INSCRIT LIST
           public function getInscritList(){
-              $inscrits = Inscrit::all();
+              $inscrits = Inscrit::orderByDesc('created_at')->get();
               //dd($inscrits);
 
               return DataTables::of($inscrits)
@@ -104,6 +118,9 @@ class SettingController extends Controller
                                 </div>
                                 <div class="btn-group" >
                                    <button class="btn btn-sm btn-info" data-id="'.$row['id'].'" id="lieu_touristik">Lieu Touristique</button>
+                                </div>
+                                <div class="btn-group" >
+                                  <button class="btn btn-sm btn-info" data-id="'.$row['id'].'" id="conferenceModal">Conférences</button>
                                 </div>';
                       }else {
                         return '<div class="btn-group" >
@@ -111,20 +128,32 @@ class SettingController extends Controller
                                 </div>
                                 <div class="btn-group" >
                                     <button class="btn btn-sm btn-info" data-id="'.$row['id'].'" id="lieu_touristik">Lieu Touristique</button>
+                                </div>
+                                <div class="btn-group" >
+                                  <button class="btn btn-sm btn-info" data-id="'.$row['id'].'" id="conferenceModal">Conférences</button>
                                 </div>';
                       }
-
                     }
                     else {
                       if ($row->etat == 'validé') {
                         return '<div class="btn-group" >
                                    <button class="btn btn-sm btn-success" disabled = true style="background:green"><i class="fa fa-check" id="cursorblock"></i></button>
+                                </div>
+                                <div class="btn-group" >
+                                  <button class="btn btn-sm btn-info" data-id="'.$row['id'].'" id="conferenceModal">Conférences</button>
                                 </div>';
                       }else {
                         return '<div class="btn-group" >
                                     <button class="btn btn-sm btn-primary" data-id="'.$row['id'].'" id="editInscritBtn">Valider</button>
+                                </div>
+                                <div class="btn-group" >
+                                  <button class="btn btn-sm btn-info" data-id="'.$row['id'].'" id="conferenceModal">Conférences</button>
                                 </div>';
                       }
+
+                      return '<div class="btn-group" >
+                        <button class="btn btn-sm btn-info" data-id="'.$row['id'].'" id="conferenceModal">Conférences</button>
+                      </div>';
 
                     }
                    })
@@ -147,6 +176,13 @@ class SettingController extends Controller
         $inscrit_id = $request->inscrit_id;
         $inscritDetails = Inscrit::with('sitesTouristiques')->findOrFail($inscrit_id);
         return response()->json(['inscrits'=>$inscritDetails]);
+    }
+
+    //GET Conference details
+    public function getConferences(Request $request){
+       $inscrit_id = $request->inscrit_id;
+       $inscritDetails = Inscrit::with('conferences')->findOrFail($inscrit_id);
+       return response()->json(['inscrits'=>$inscritDetails]);
     }
 
      //Envoie Email

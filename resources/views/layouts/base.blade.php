@@ -211,6 +211,17 @@
 
     <script src="{{asset('js/zilla-likes.js')}}" defer="defer" type="text/javascript"></script>
     <link href="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.css" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <style>
+        .select2-container{
+            display: block !important;
+            width: 100% !important;
+        }
+    </style>
+    
+    
     <meta name="generator" content="Powered by Slider Revolution 5.4.8 - responsive, Mobile-Friendly Slider Plugin for WordPress with comfortable drag and drop interface." />
     <script type="text/javascript">function setREVStartSize(e){
     						try{ e.c=jQuery(e.c);var i=jQuery(window).width(),t=9999,r=0,n=0,l=0,f=0,s=0,h=0;
@@ -416,6 +427,7 @@
     </div> <!-- .site-wrapper -->
 
     @include('modal.envoi_mail')
+    
     @include('modal.lieu_touristik')
 
     <link rel='stylesheet' id='vc_google_fonts_roboto_slab100300regular700-css' href='https://fonts.googleapis.com/css?family=Roboto+Slab%3A100%2C300%2Cregular%2C700' type='text/css' media='all' />
@@ -484,6 +496,9 @@
     <script src="{{asset('table/js/responsive.bootstrap4.min.js')}}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script>
     const phoneInputField = document.querySelector("#phone");
     const phoneInput = window.intlTelInput(phoneInputField, {
@@ -727,6 +742,50 @@
                  },'json');
               });
 
+              //Modal Fenetre Affichage Infos de la conference
+              $(document).on('click', '#conferenceModal', function(){
+                let inscrit_id = $(this).data('id')
+                const url = '{{ route('get.conference.detail') }}'
+                $.post(url, {
+                    inscrit_id: inscrit_id
+                }, function(data){
+                    const modal = $('.modal_conference')
+
+                    $(modal).find('strong.civiliteinscrit').text(data.inscrits.civilite)
+                    $(modal).find('strong.nominscrit').text(data.inscrits.nom);
+                    $(modal).find('strong.prenominscrit').text(data.inscrits.prenoms);
+
+                    $('#conference-list').empty();
+
+                    const conferences = data.inscrits.conferences
+
+                    if (conferences.length == 0) {
+                        var conferenceHtml = '<li class="list-group-item">';
+                        conferenceHtml += '<div style="font-size : 15px; text-align: center; font-weight: bold">Aucune conférence</div>';
+                        conferenceHtml += '</li>';
+                        $('#conference-list').append(conferenceHtml);
+                    }else{
+                        data.inscrits.conferences.forEach(function(conference){
+                            const moderateur = conference.moderateur !== null ? conference.moderateur : 'Aucun'
+                            const mode = conference.mode !== null ? conference.mode : 'Aucun'
+                            var conferenceHtml = '<li class="list-group-item">';
+                            conferenceHtml += '<strong style="font-size : 15px">' + conference.theme + '</strong><br>';
+                            conferenceHtml += '<strong> Mode</strong> : ' + mode + ' <br>';
+                            conferenceHtml += '<strong> Modérateur</strong> : ' + moderateur + ' <br>';
+                            conferenceHtml += '<strong> Du </strong> : <span class="badge badge-primary badge-pill" style="float: none !important">' + conference.debut + '</span><br>';
+                            conferenceHtml += '<strong> Au </strong> :<span class="badge badge-primary badge-pill" style="float: none !important">' + conference.fin + '</span><br>';
+                            conferenceHtml += '</li>';
+                            $('#conference-list').append(conferenceHtml);
+                        })
+                    }
+
+
+                    $(modal).modal('show');
+                })
+
+
+              })
+
              //UPDATE ETAT INSCRIT
              // UPDATE ETAT INSCRIT
 
@@ -786,6 +845,8 @@
   </script>
   <script>
         $(document).ready(function() {
+            $('.select2').select2()
+            
             $('#exportButton').on('click', function(event) {
                 event.preventDefault();
                 var url = $(this).attr('href');
