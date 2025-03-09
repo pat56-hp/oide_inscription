@@ -1,0 +1,226 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API d'Inscription",
+        "description": "Documentation de l'API d'inscription et de gestion des conférences",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/inscription": {
+            "post": {
+                "tags": [
+                    "Inscriptions"
+                ],
+                "summary": "Inscription d'un utilisateur",
+                "description": "Permet à un utilisateur de s'inscrire à une ou plusieurs conférences.",
+                "operationId": "875f69d8982c0685e8d2c73ceb59ec86",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "civilite",
+                                    "nom",
+                                    "prenoms",
+                                    "email",
+                                    "nationalite",
+                                    "pays_residence",
+                                    "langue_com",
+                                    "numero_tel",
+                                    "conferences"
+                                ],
+                                "properties": {
+                                    "civilite": {
+                                        "type": "string",
+                                        "example": "M."
+                                    },
+                                    "nom": {
+                                        "type": "string",
+                                        "example": "DOE"
+                                    },
+                                    "prenoms": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "genre": {
+                                        "type": "string",
+                                        "example": "Homme"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "johndoe@example.com"
+                                    },
+                                    "nationalite": {
+                                        "type": "string",
+                                        "example": "Ivoirienne"
+                                    },
+                                    "pays_residence": {
+                                        "type": "string",
+                                        "example": "Côte d'Ivoire"
+                                    },
+                                    "langue_com": {
+                                        "type": "string",
+                                        "example": "Français"
+                                    },
+                                    "numero_tel": {
+                                        "type": "string",
+                                        "example": "+2250707070707"
+                                    },
+                                    "lieu_touristique": {
+                                        "type": "string",
+                                        "example": "oui"
+                                    },
+                                    "visit_tourist_site": {
+                                        "type": "string",
+                                        "example": "oui"
+                                    },
+                                    "selected_sites_data": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Basilique Notre-Dame de la Paix"
+                                                },
+                                                "img": {
+                                                    "type": "string",
+                                                    "example": "https://example.com/image.jpg"
+                                                },
+                                                "desc": {
+                                                    "type": "string",
+                                                    "example": "Un monument historique"
+                                                },
+                                                "price": {
+                                                    "type": "number",
+                                                    "example": 2000
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "conferences": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Inscription réussie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Inscription réussie"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erreur lors de l'inscription",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Une erreur est survenue lors de l'inscription"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Détails de l'erreur"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/conferences": {
+            "get": {
+                "tags": [
+                    "Inscriptions"
+                ],
+                "summary": "Récupérer la liste des conférences",
+                "description": "Retourne toutes les conférences disponibles.",
+                "operationId": "03b922f9bad455cccf5fc53edc433bf8",
+                "responses": {
+                    "200": {
+                        "description": "Liste des conférences",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Liste des conférences"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "theme": {
+                                                        "type": "string",
+                                                        "example": "Laravel & Clean Architecture"
+                                                    },
+                                                    "debut": {
+                                                        "type": "string",
+                                                        "example": "2025-04-01 10:00:00"
+                                                    },
+                                                    "fin": {
+                                                        "type": "string",
+                                                        "example": "2025-04-01 12:00:00"
+                                                    },
+                                                    "mode": {
+                                                        "type": "string",
+                                                        "example": "En ligne"
+                                                    },
+                                                    "moderateur": {
+                                                        "type": "string",
+                                                        "example": "John Doe"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Inscriptions",
+            "description": "Endpoints pour la gestion des inscriptions"
+        }
+    ]
+}

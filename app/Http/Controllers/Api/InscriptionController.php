@@ -10,8 +10,68 @@ use App\Models\InscritSiteTouristique;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * @OA\Info(
+ *      title="API d'Inscription",
+ *      version="1.0.0",
+ *      description="Documentation de l'API d'inscription et de gestion des conférences"
+ * )
+ *
+ * @OA\Tag(
+ *     name="Inscriptions",
+ *     description="Endpoints pour la gestion des inscriptions"
+ * )
+ */
 class InscriptionController extends Controller
 {
+    /**
+     * @OA\Post(
+     *     path="/api/v1/inscription",
+     *     tags={"Inscriptions"},
+     *     summary="Inscription d'un utilisateur",
+     *     description="Permet à un utilisateur de s'inscrire à une ou plusieurs conférences.",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"civilite","nom","prenoms","email","nationalite","pays_residence","langue_com","numero_tel","conferences"},
+     *             @OA\Property(property="civilite", type="string", example="M."),
+     *             @OA\Property(property="nom", type="string", example="DOE"),
+     *             @OA\Property(property="prenoms", type="string", example="John"),
+     *             @OA\Property(property="genre", type="string", example="Homme"),
+     *             @OA\Property(property="email", type="string", format="email", example="johndoe@example.com"),
+     *             @OA\Property(property="nationalite", type="string", example="Ivoirienne"),
+     *             @OA\Property(property="pays_residence", type="string", example="Côte d'Ivoire"),
+     *             @OA\Property(property="langue_com", type="string", example="Français"),
+     *             @OA\Property(property="numero_tel", type="string", example="+2250707070707"),
+     *             @OA\Property(property="lieu_touristique", type="string", example="oui"),
+     *             @OA\Property(property="visit_tourist_site", type="string", example="oui"),
+     *             @OA\Property(property="selected_sites_data", type="array", @OA\Items(
+     *                 @OA\Property(property="name", type="string", example="Basilique Notre-Dame de la Paix"),
+     *                 @OA\Property(property="img", type="string", example="https://example.com/image.jpg"),
+     *                 @OA\Property(property="desc", type="string", example="Un monument historique"),
+     *                 @OA\Property(property="price", type="number", example=2000)
+     *             )),
+     *             @OA\Property(property="conferences", type="array", @OA\Items(type="integer", example=1))
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Inscription réussie",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Inscription réussie"),
+     *             @OA\Property(property="data", type="object")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Erreur lors de l'inscription",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Une erreur est survenue lors de l'inscription"),
+     *             @OA\Property(property="error", type="string", example="Détails de l'erreur")
+     *         )
+     *     )
+     * )
+     */
     public function inscription(InscriptionRequest $request)
     {
         try {
@@ -66,6 +126,29 @@ class InscriptionController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/v1/conferences",
+     *     tags={"Inscriptions"},
+     *     summary="Récupérer la liste des conférences",
+     *     description="Retourne toutes les conférences disponibles.",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Liste des conférences",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Liste des conférences"),
+     *             @OA\Property(property="data", type="array", @OA\Items(
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="theme", type="string", example="Laravel & Clean Architecture"),
+     *                 @OA\Property(property="debut", type="string", example="2025-04-01 10:00:00"),
+     *                 @OA\Property(property="fin", type="string", example="2025-04-01 12:00:00"),
+     *                 @OA\Property(property="mode", type="string", example="En ligne"),
+     *                 @OA\Property(property="moderateur", type="string", example="John Doe")
+     *             ))
+     *         )
+     *     )
+     * )
+     */
     public function getConferences(){
         $conferences = Conference::orderBy('theme')->get();
         return response()->json([
